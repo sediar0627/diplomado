@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('proyecto_usuarios', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\Proyecto::class)->constrained('proyectos');
-            $table->foreignIdFor(\App\Models\Usuario::class)->constrained('usuarios');
+            $table->foreignIdFor(\App\Models\User::class)->constrained('usuarios');
             $table->timestamps();
         });
     }

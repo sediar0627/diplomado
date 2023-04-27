@@ -20,8 +20,8 @@ return new class extends Migration
             $table->foreignIdFor(App\Models\Epica::class)->nullable()->constrained('epicas');
             $table->integer('puntaje')->nullable();
             $table->string('estado', 20)->default(App\Enums\EstadoIncidencia::PENDIENTE->value);
-            $table->foreignIdFor(\App\Models\Usuario::class, 'responsable_id')->nullable()->constrained('usuarios');
-            $table->foreignIdFor(\App\Models\Usuario::class, 'informador_id')->constrained('usuarios');
+            $table->foreignIdFor(\App\Models\User::class, 'responsable_id')->nullable()->constrained('usuarios');
+            $table->foreignIdFor(\App\Models\User::class, 'informador_id')->constrained('usuarios');
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->morphs('modelo');
             $table->text('descripcion');
-            $table->foreignIdFor(\App\Models\Usuario::class, 'informador_id')->constrained('usuarios');
+            $table->foreignIdFor(\App\Models\User::class, 'informador_id')->constrained('usuarios');
             $table->timestamps();
         });
     }
