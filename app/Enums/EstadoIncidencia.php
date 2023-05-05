@@ -12,17 +12,19 @@ enum EstadoIncidencia : string implements EnumContracto
     case PENDIENTE = 'PENDIENTE';
     case EN_CURSO = 'EN_CURSO';
     case AJUSTES = 'AJUSTE';
+    case TEST = 'TEST';
     case QA = 'QA';
     case FINALIZADA = 'FINALIZADA';
 
     public function descripcion(): string
     {
         return match ($this) {
-            self::PENDIENTE => 'PENDIENTE',
-            self::EN_CURSO => 'EN CURSO',
-            self::AJUSTES => 'AJUSTES',
+            self::PENDIENTE => 'Pendiente',
+            self::EN_CURSO => 'En curso',
+            self::AJUSTES => 'Ajustes',
+            self::TEST => 'Test',
             self::QA => 'QA',
-            self::FINALIZADA => 'FINALIZADA',
+            self::FINALIZADA => 'Finalizada',
         };
     }
 }
