@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TableroController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -20,13 +21,12 @@ Route::get('/', function () {
     return to_route('login');
 });
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth', 'verified'])->group(function(){
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
-    Route::middleware(['verified'])->group(function(){
-        Route::get('/dashboard', function () {
-            return Inertia::render('HomeView');
-        })->name('dashboard');
-    });
+    Route::get('/tableros', [TableroController::class, 'index'])->name('tableros');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

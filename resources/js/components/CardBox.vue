@@ -12,6 +12,10 @@ const props = defineProps({
     type: String,
     default: "flex-col",
   },
+  color: {
+    type: String,
+    default: "bg-white",
+  },
   hasComponentLayout: Boolean,
   hasTable: Boolean,
   isForm: Boolean,
@@ -39,6 +43,14 @@ const componentClass = computed(() => {
   return base;
 });
 
+const colorClass = computed(() => {
+  if (props.isModal) {
+    return "dark:bg-slate-900";
+  }
+
+  return props.color;
+});
+
 const submit = (event) => {
   emit("submit", event);
 };
@@ -47,8 +59,8 @@ const submit = (event) => {
 <template>
   <component
     :is="isForm ? 'form' : 'div'"
-    :class="componentClass"
-    class="bg-white flex"
+    :class="[componentClass, colorClass]"
+    class="flex"
     @submit="submit"
   >
     <slot v-if="hasComponentLayout" />

@@ -10,7 +10,7 @@ use App\Enums\Contratos\EnumContracto;
 enum EstadoIncidencia : string implements EnumContracto
 {
     case PENDIENTE = 'PENDIENTE';
-    case EN_CURSO = 'EN_CURSO';
+    case EN_CURSO = 'EN CURSO';
     case AJUSTES = 'AJUSTE';
     case TEST = 'TEST';
     case QA = 'QA';
