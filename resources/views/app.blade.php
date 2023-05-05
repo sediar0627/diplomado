@@ -6,6 +6,10 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
+        {{-- Favicons --}}
+        <link href="{{ asset('/logo/icono.svg') }}" rel="icon">
+        <link href="{{ asset('/logo/icono.svg') }}" rel="apple-touch-icon">
+
         <!-- Scripts -->
         @routes
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])

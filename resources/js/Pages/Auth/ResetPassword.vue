@@ -9,6 +9,7 @@ import FormControl from '@/components/FormControl.vue'
 import BaseDivider from '@/components/BaseDivider.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import FormValidationErrors from '@/components/FormValidationErrors.vue'
+import IconApp from '@/components/IconApp.vue'
 
 const props = defineProps({
   email: {
@@ -30,7 +31,7 @@ const form = useForm({
 
 const submit = () => {
   form
-    .post(route('password.update'), {
+    .post(route('password.store'), {
       onFinish: () => form.reset('password', 'password_confirmation'),
     })
 }
@@ -38,11 +39,10 @@ const submit = () => {
 
 <template>
   <LayoutGuest>
-    <Head title="Reset Password" />
+    <Head title="Restablecer contraseña" />
 
     <SectionFullScreen
       v-slot="{ cardClass }"
-      bg="purplePink"
     >
       <CardBox
         :class="cardClass"
@@ -51,10 +51,12 @@ const submit = () => {
       >
         <FormValidationErrors />
 
+        <IconApp width="w-3/6" />
+
         <FormField
-          label="Email"
+          label="Correo electrónico"
           label-for="email"
-          help="Please enter your email"
+          help="Por favor ingrese su correo electrónico"
         >
           <FormControl
             v-model="form.email"
@@ -67,9 +69,9 @@ const submit = () => {
         </FormField>
 
         <FormField
-          label="Password"
+          label="Contraseña"
           label-for="password"
-          help="Please enter new password"
+          help="Por favor ingrese su contraseña"
         >
           <FormControl
             v-model="form.password"
@@ -84,7 +86,7 @@ const submit = () => {
         <FormField
           label="Confirm Password"
           label-for="password_confirmation"
-          help="Please confirm new password"
+          help="Por favor confirme su contraseña"
         >
           <FormControl
             v-model="form.password_confirmation"
@@ -101,7 +103,7 @@ const submit = () => {
         <BaseButton
           type="submit"
           color="info"
-          label="Reset password"
+          label="Restablecer contraseña"
           :class="{ 'opacity-25': form.processing }"
           :disabled="form.processing"
         />

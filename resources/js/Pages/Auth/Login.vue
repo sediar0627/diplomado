@@ -13,6 +13,7 @@ import BaseButtons from '@/components/BaseButtons.vue'
 import FormValidationErrors from '@/components/FormValidationErrors.vue'
 import NotificationBarInCard from '@/components/NotificationBarInCard.vue'
 import BaseLevel from '@/components/BaseLevel.vue'
+import IconApp from '@/components/IconApp.vue'
 
 const props = defineProps({
   canResetPassword: Boolean,
@@ -42,11 +43,10 @@ const submit = () => {
 
 <template>
   <LayoutGuest>
-    <Head title="Login" />
+    <Head title="Iniciar Sesion" />
 
     <SectionFullScreen
       v-slot="{ cardClass }"
-      bg="purplePink"
     >
       <CardBox
         :class="cardClass"
@@ -62,10 +62,12 @@ const submit = () => {
           {{ status }}
         </NotificationBarInCard>
 
+        <IconApp width="w-3/6" />
+
         <FormField
-          label="Email"
+          label="Correo electrónico"
           label-for="email"
-          help="Please enter your email"
+          help="Por favor ingrese su correo electrónico"
         >
           <FormControl
             v-model="form.email"
@@ -78,9 +80,9 @@ const submit = () => {
         </FormField>
 
         <FormField
-          label="Password"
+          label="Contraseña"
           label-for="password"
-          help="Please enter your password"
+          help="Por favor ingrese su contraseña"
         >
           <FormControl
             v-model="form.password"
@@ -95,7 +97,7 @@ const submit = () => {
         <FormCheckRadioGroup
           v-model="form.remember"
           name="remember"
-          :options="{ remember: 'Remember' }"
+          :options="{ remember: 'Recordarme' }"
         />
 
         <BaseDivider />
@@ -105,7 +107,7 @@ const submit = () => {
             <BaseButton
               type="submit"
               color="info"
-              label="Login"
+              label="Iniciar Sesión"
               :class="{ 'opacity-25': form.processing }"
               :disabled="form.processing"
             />
@@ -114,13 +116,13 @@ const submit = () => {
               route-name="password.request"
               color="info"
               outline
-              label="Remind"
+              label="Olvidaste tu contraseña?"
             />
           </BaseButtons>
           <Link
             :href="route('register')"
           >
-            Register
+            Registrate
           </Link>
         </BaseLevel>
       </CardBox>

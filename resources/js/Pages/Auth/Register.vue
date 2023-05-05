@@ -12,6 +12,7 @@ import BaseDivider from "@/components/BaseDivider.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import FormValidationErrors from "@/components/FormValidationErrors.vue";
+import IconApp from "@/components/IconApp.vue";
 
 const form = useForm({
   name: "",
@@ -39,9 +40,9 @@ const submit = () => {
 
 <template>
   <LayoutGuest>
-    <Head title="Register" />
+    <Head title="Registrarse" />
 
-    <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
+    <SectionFullScreen v-slot="{ cardClass }" >
       <CardBox
         :class="cardClass"
         class="my-24"
@@ -50,7 +51,12 @@ const submit = () => {
       >
         <FormValidationErrors />
 
-        <FormField label="Name" label-for="name" help="Please enter your name">
+        <IconApp width="w-3/6" />
+
+        <FormField 
+          label="Nombre" 
+          label-for="name" 
+          help="Por favor ingrese su nombre">
           <FormControl
             v-model="form.name"
             id="name"
@@ -62,9 +68,9 @@ const submit = () => {
         </FormField>
 
         <FormField
-          label="Email"
+          label="Correo electrónico"
           label-for="email"
-          help="Please enter your email"
+          help="Por favor ingrese su correo electrónico"
         >
           <FormControl
             v-model="form.email"
@@ -77,9 +83,9 @@ const submit = () => {
         </FormField>
 
         <FormField
-          label="Password"
+          label="Contraseña"
           label-for="password"
-          help="Please enter new password"
+          help="Por favor ingrese su contraseña"
         >
           <FormControl
             v-model="form.password"
@@ -92,9 +98,9 @@ const submit = () => {
         </FormField>
 
         <FormField
-          label="Confirm Password"
+          label="Confirmar contraseña"
           label-for="password_confirmation"
-          help="Please confirm your password"
+          help="Por favor confirme su contraseña"
         >
           <FormControl
             v-model="form.password_confirmation"
@@ -119,11 +125,11 @@ const submit = () => {
           <BaseButton
             type="submit"
             color="info"
-            label="Register"
+            label="Registrarse"
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"
           />
-          <BaseButton route-name="login" color="info" outline label="Login" />
+          <BaseButton route-name="login" color="info" outline label="Iniciar Sesión" />
         </BaseButtons>
       </CardBox>
     </SectionFullScreen>
