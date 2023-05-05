@@ -10,7 +10,7 @@ const hasErrors = computed(() => Object.keys(errors.value).length > 0);
 
 <template>
   <NotificationBarInCard v-if="hasErrors" color="danger">
-    <b>Whoops! Something went wrong.</b>
+    <b>¡Vaya! Algo salió mal.</b>
     <span v-for="(error, key) in errors" :key="key">{{ error }}</span>
   </NotificationBarInCard>
 </template>
