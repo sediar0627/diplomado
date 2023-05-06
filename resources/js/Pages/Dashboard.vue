@@ -2,12 +2,14 @@
 import { computed, ref, onMounted } from "vue";
 import { useMainStore } from "@/stores/main";
 import {
-  mdiAccountMultiple,
-  mdiCartOutline,
-  mdiChartTimelineVariant,
-  mdiMonitorCellphone,
+  mdiProgressCheck,
+  mdiProgressPencil,
+  mdiProgressClock,
+  mdiProgressAlert,
+  mdiProgressStar,
+  mdiProgressWrench,
+  mdiCheckboxMarkedCircleAutoOutline,
   mdiReload,
-  mdiGithub,
   mdiChartPie,
 } from "@mdi/js";
 import * as chartConfig from "@/components/Charts/chart.config.js";
@@ -22,7 +24,7 @@ import CardBoxTransaction from "@/components/CardBoxTransaction.vue";
 import CardBoxClient from "@/components/CardBoxClient.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
-import SectionBannerStarOnGitHub from "@/components/SectionBannerStarOnGitHub.vue";
+import { Head } from "@inertiajs/vue3";
 
 const chartData = ref(null);
 
@@ -43,49 +45,52 @@ const transactionBarItems = computed(() => mainStore.history);
 
 <template>
   <LayoutAuthenticated>
+    <Head title="Dashboard" />
+    
     <SectionMain>
       <SectionTitleLineWithButton
-        :icon="mdiChartTimelineVariant"
-        title="Overview"
+        :icon="mdiCheckboxMarkedCircleAutoOutline"
+        title="Tareas"
         main
       >
-        <BaseButton
-          href="https://github.com/justboil/admin-one-vue-tailwind"
-          target="_blank"
-          :icon="mdiGithub"
-          label="Star on GitHub"
-          color="contrast"
-          rounded-full
-          small
-        />
       </SectionTitleLineWithButton>
 
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
         <CardBoxWidget
-          trend="12%"
-          trend-type="up"
-          color="text-emerald-500"
-          :icon="mdiAccountMultiple"
-          :number="512"
-          label="Clients"
+          color="text-gray-500"
+          :icon="mdiProgressClock"
+          :number="21"
+          label="Pendientes"
         />
         <CardBoxWidget
-          trend="12%"
-          trend-type="down"
           color="text-blue-500"
-          :icon="mdiCartOutline"
-          :number="7770"
-          prefix="$"
-          label="Sales"
+          :icon="mdiProgressPencil"
+          :number="8"
+          label="En curso"
         />
         <CardBoxWidget
-          trend="Overflow"
-          trend-type="alert"
-          color="text-red-500"
-          :icon="mdiChartTimelineVariant"
-          :number="256"
-          suffix="%"
-          label="Performance"
+          color="text-orange-400"
+          :icon="mdiProgressWrench"
+          :number="0"
+          label="Ajustes"
+        />
+        <CardBoxWidget
+          color="text-violet-500"
+          :icon="mdiProgressAlert"
+          :number="13"
+          label="Test"
+        />
+        <CardBoxWidget
+          color="text-sky-500"
+          :icon="mdiProgressStar"
+          :number="0"
+          label="QA"
+        />
+        <CardBoxWidget
+          color="text-emerald-500"
+          :icon="mdiProgressCheck"
+          :number="78"
+          label="Finalizada"
         />
       </div>
 
@@ -114,9 +119,7 @@ const transactionBarItems = computed(() => mainStore.history);
         </div>
       </div>
 
-      <SectionBannerStarOnGitHub class="mt-6 mb-6" />
-
-      <SectionTitleLineWithButton :icon="mdiChartPie" title="Trends overview">
+      <SectionTitleLineWithButton :icon="mdiChartPie" title="Rendimiento de tareas">
         <BaseButton
           :icon="mdiReload"
           color="whiteDark"
@@ -130,7 +133,7 @@ const transactionBarItems = computed(() => mainStore.history);
         </div>
       </CardBox>
 
-      <SectionTitleLineWithButton :icon="mdiAccountMultiple" title="Clients" />
+      <!-- <SectionTitleLineWithButton :icon="mdiAccountMultiple" title="Clients" />
 
       <NotificationBar color="info" :icon="mdiMonitorCellphone">
         <b>Responsive table.</b> Collapses on mobile
@@ -138,7 +141,7 @@ const transactionBarItems = computed(() => mainStore.history);
 
       <CardBox has-table>
         <TableSampleClients />
-      </CardBox>
+      </CardBox> -->
     </SectionMain>
   </LayoutAuthenticated>
 </template>

@@ -11,6 +11,7 @@ import BaseButton from '@/components/BaseButton.vue'
 import FormValidationErrors from '@/components/FormValidationErrors.vue'
 import NotificationBarInCard from '@/components/NotificationBarInCard.vue'
 import BaseLevel from '@/components/BaseLevel.vue'
+import IconApp from '@/components/IconApp.vue'
 
 defineProps({
   status: {
@@ -30,11 +31,10 @@ const submit = () => {
 
 <template>
   <LayoutGuest>
-    <Head title="Forgot Password" />
+    <Head title="¿Olvidaste tu contraseña?" />
 
     <SectionFullScreen
       v-slot="{ cardClass }"
-      bg="purplePink"
     >
       <CardBox
         :class="cardClass"
@@ -50,15 +50,17 @@ const submit = () => {
           {{ status }}
         </NotificationBarInCard>
 
+        <IconApp width="w-3/6" />
+
         <FormField>
           <div class="mb-4 text-sm text-gray-600">
-            Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
+            ¿Olvidaste tu contraseña? No hay ningún problema. Simplemente háganos saber su dirección de correo electrónico y le enviaremos un enlace de restablecimiento de contraseña que le permitirá elegir una nueva.
           </div>
         </FormField>
 
         <FormField
-          label="Email"
-          help="Please enter your email"
+          label="Correo electrónico"
+          help="Por favor ingrese su correo electrónico"
         >
           <FormControl
             v-model="form.email"
@@ -75,14 +77,14 @@ const submit = () => {
           <BaseButton
             type="submit"
             color="info"
-            label="Email link"
+            label="Enviar correo"
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"
           />
           <Link
             :href="route('login')"
           >
-            Back to login
+            Regresar al inicio de sesión
           </Link>
         </BaseLevel>
       </CardBox>

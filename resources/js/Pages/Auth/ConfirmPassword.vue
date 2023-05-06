@@ -9,6 +9,7 @@ import FormField from '@/components/FormField.vue'
 import BaseDivider from '@/components/BaseDivider.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import FormValidationErrors from '@/components/FormValidationErrors.vue'
+import IconApp from '@/components/IconApp.vue'
 
 const form = useForm({
   password: ''
@@ -29,11 +30,10 @@ const submit = () => {
 
 <template>
   <LayoutGuest>
-    <Head title="Secure Area" />
+    <Head title="Confirmar contraseña" />
     
     <SectionFullScreen
       v-slot="{ cardClass }"
-      bg="purplePink"
     >
       <CardBox
         :class="cardClass"
@@ -42,16 +42,17 @@ const submit = () => {
       >
         <FormValidationErrors />
 
+        <IconApp width="w-3/6" />
+
         <FormField>
           <div class="mb-4 text-sm text-gray-600">
-            This is a secure area of the application. Please confirm your password before continuing.
-          </div>
+            Esta es un área segura de la aplicación. Por favor, confirme su contraseña antes de continuar.          </div>
         </FormField>
 
         <FormField
-          label="Password"
+          label="Contraseña"
           label-for="password"
-          help="Please enter your password to confirm"
+          help="Por favor ingrese su contraseña para confirmar"
         >
           <FormControl
             id="password"

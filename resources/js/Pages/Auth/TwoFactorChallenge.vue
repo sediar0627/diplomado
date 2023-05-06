@@ -10,6 +10,7 @@ import BaseDivider from '@/components/BaseDivider.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import FormValidationErrors from '@/components/FormValidationErrors.vue'
 import BaseLevel from '@/components/BaseLevel.vue'
+import IconApp from '@/components/IconApp.vue'
 
 const recovery = ref(false)
 
@@ -46,7 +47,6 @@ const submit = () => {
 
     <SectionFullScreen
       v-slot="{ cardClass }"
-      bg="purplePink"
     >
       <CardBox
         :class="cardClass"
@@ -54,6 +54,8 @@ const submit = () => {
         @submit.prevent="submit"
       >
         <FormValidationErrors />
+
+        <IconApp width="w-3/6" />
 
         <FormField>
           <div class="mb-4 text-sm text-gray-600">

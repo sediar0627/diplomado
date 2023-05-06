@@ -1,86 +1,63 @@
 import {
   mdiAccountCircle,
   mdiMonitor,
-  mdiGithub,
-  mdiLock,
-  mdiAlertCircle,
   mdiSquareEditOutline,
   mdiTable,
   mdiViewList,
-  mdiTelevisionGuide,
-  mdiResponsive,
-  mdiPalette,
-  mdiReact,
 } from "@mdi/js";
 
 export default [
   {
-    to: "/dashboard",
+    route: "dashboard",
     icon: mdiMonitor,
     label: "Dashboard",
   },
   {
-    to: "/tables",
-    label: "Tables",
-    icon: mdiTable,
-  },
-  {
-    to: "/forms",
-    label: "Forms",
-    icon: mdiSquareEditOutline,
-  },
-  {
-    to: "/ui",
-    label: "UI",
-    icon: mdiTelevisionGuide,
-  },
-  {
-    to: "/responsive",
-    label: "Responsive",
-    icon: mdiResponsive,
-  },
-  {
-    to: "/",
-    label: "Styles",
-    icon: mdiPalette,
-  },
-  {
     to: "/profile",
-    label: "Profile",
+    label: "Mi perfil",
     icon: mdiAccountCircle,
   },
   {
-    to: "/login",
-    label: "Login",
-    icon: mdiLock,
-  },
-  {
-    to: "/error",
-    label: "Error",
-    icon: mdiAlertCircle,
-  },
-  {
-    label: "Dropdown",
+    label: "Proyectos",
     icon: mdiViewList,
     menu: [
       {
-        label: "Item One",
+        label: "Listado de proyectos",
       },
       {
-        label: "Item Two",
+        label: "Nuevo proyecto",
       },
     ],
   },
   {
-    href: "https://github.com/justboil/admin-one-vue-tailwind",
-    label: "GitHub",
-    icon: mdiGithub,
-    target: "_blank",
+    label: "Sprints",
+    icon: mdiViewList,
+    menu: [
+      {
+        label: "Listado de sprints",
+      },
+      {
+        label: "Nuevo sprint",
+      },
+    ],
   },
   {
-    href: "https://github.com/justboil/admin-one-react-tailwind",
-    label: "React version",
-    icon: mdiReact,
-    target: "_blank",
+    label: "Tableros",
+    icon: mdiViewList,
+    menu: [
+      {
+        label: "ScrumPro",
+        href: "/tableros?tablero=ScrumPro",
+      },
+      {
+        label: "Alcon",
+        href: "/tableros?tablero=Alcon",
+      },
+    ],
   },
+  {
+    to: "/forms",
+    label: "Informes",
+    icon: mdiSquareEditOutline,
+  }
 ];
