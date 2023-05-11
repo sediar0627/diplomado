@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Proyecto extends Model
 {
@@ -17,6 +18,11 @@ class Proyecto extends Model
         'codigo',
         'nombre',
         'descripcion',
+        'incidencias_creadas'
+    ];
+
+    protected $cast = [
+        'incidencias_creadas' => 'integer',
     ];
 
     protected $appends = [
@@ -31,6 +37,19 @@ class Proyecto extends Model
     public function creador(): BelongsTo
     {
         return $this->belongsTo(User::class, 'creador_id');
+    }
+
+    public function incidencias(): HasMany
+    {
+        return $this->hasMany(Incidencia::class, 'proyecto_id');
+    }
+
+    public function obtenerNuevoConsecutivoIncidencia()
+    {
+        $this->incidencias_creadas++;
+        $this->save();
+
+        return $this->incidencias_creadas;
     }
 
     public function puedeEliminar(): bool

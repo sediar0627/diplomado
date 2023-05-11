@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\IncidenciaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\TableroController;
+use App\Models\Proyecto;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,6 +32,18 @@ Route::middleware(['auth', 'verified'])->group(function(){
     Route::resource('proyectos', ProyectoController::class)->parameters([
         'proyectos' => 'proyecto'
     ]);
+
+    Route::prefix('/proyecto/{proyecto}')->group(function(){
+        Route::resource('incidencias', IncidenciaController::class)->parameters([
+            'proyectos' => 'proyecto',
+            'incidencias' => 'incidencia'
+        ]);
+    });
+
+    // Route::resource('incidencias', IncidenciaController::class)->parameters([
+    //     'proyectos' => 'proyecto',
+    //     'incidencias' => 'incidencia'
+    // ])->shallow();
 
     Route::get('/tableros', [TableroController::class, 'index'])->name('tableros');
 

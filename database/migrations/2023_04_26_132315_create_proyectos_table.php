@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('creador_id')->constrained('usuarios');
             $table->string('codigo', 10);
             $table->string('nombre', 30);
+            $table->integer('incidencias_creadas')->default(0);
             $table->tinyText('descripcion')->nullable();
             $table->timestamps();
 

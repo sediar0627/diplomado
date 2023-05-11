@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('incidencias', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(App\Models\Proyecto::class, 'proyecto_id')->constrained('proyectos');
             $table->foreignIdFor(App\Models\Sprint::class, 'sprint_id')->nullable()->constrained('sprints');
             $table->integer('consecutivo');
             $table->string('titulo', 100);
