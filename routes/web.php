@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\TableroController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,10 @@ Route::middleware(['auth', 'verified'])->group(function(){
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::resource('proyectos', ProyectoController::class)->parameters([
+        'proyectos' => 'proyecto'
+    ]);
 
     Route::get('/tableros', [TableroController::class, 'index'])->name('tableros');
 

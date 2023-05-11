@@ -23,9 +23,11 @@ export default [
     menu: [
       {
         label: "Listado de proyectos",
+        route: "proyectos.index",
       },
       {
         label: "Nuevo proyecto",
+        route: "proyectos.create",
       },
     ],
   },

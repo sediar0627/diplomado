@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('proyectos', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo', 10)->unique();
-            $table->string('nombre', 100);
-            $table->tinyText('descripcion');
+            $table->foreignId('creador_id')->constrained('usuarios');
+            $table->string('codigo', 10);
+            $table->string('nombre', 30);
+            $table->tinyText('descripcion')->nullable();
             $table->timestamps();
+
+            $table->unique(['codigo', 'creador_id']);
         });
     }
 
