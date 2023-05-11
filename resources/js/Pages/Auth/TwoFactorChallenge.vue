@@ -53,7 +53,7 @@ const submit = () => {
         is-form
         @submit.prevent="submit"
       >
-        <FormValidationErrors />
+        <FormValidationErrors :formulario="form"/>
 
         <IconApp width="w-3/6" />
 

@@ -61,7 +61,7 @@ const editarProyecto = () => {
     });
 }
 
-const submit = () => {
+const submitProyecto = () => {
     if(! props.proyecto?.id){
         crearProyecto();
     }else{
@@ -69,12 +69,35 @@ const submit = () => {
     }
 };
 
-const reset = () => {
+const resetProyecto = () => {
     if(! props.proyecto?.id){
         form.reset();
     }
+    form.clearErrors();
     usePage().props.succesForm = false;
 };
+
+const formEnviarInvitacion = useForm({
+    correo: ''
+});
+
+const submitInvitacion = () => {
+    formEnviarInvitacion.post(route('proyectos.enviar_invitacion', props.proyecto?.id ?? '__id'), {
+        onSuccess: () => {
+            usePage().props.succesFormEnviarInvitacion = true;
+            formEnviarInvitacion.reset();
+        },
+        onError: () => {
+            usePage().props.succesFormEnviarInvitacion = false;
+        },
+    });
+}
+
+const resetInvitacion = () => {
+    formEnviarInvitacion.reset();
+    formEnviarInvitacion.clearErrors();
+    usePage().props.succesFormEnviarInvitacion = false;
+}
 </script>
 
 <template>
@@ -93,9 +116,9 @@ const reset = () => {
                 />
             </SectionTitleLineWithButton>
             
-            <CardBox is-form @submit.prevent="submit">
+            <CardBox is-form @submit.prevent="submitProyecto">
 
-                <FormValidationErrors />
+                <FormValidationErrors :formulario="form"/>
 
                 <FormControl v-if="props.proyecto" v-model="props.proyecto.id" type="hidden" />
 
@@ -119,11 +142,37 @@ const reset = () => {
                     <div class="flex gap-4">
                         <BaseButtons>
                             <BaseButton type="submit" color="info" :label="! props.proyecto?.id ? 'Crear' : 'Actualizar'"/>
-                            <BaseButton type="button" color="info" outline label="Limpiar" @click="reset"/>
+                            <BaseButton type="button" color="info" outline label="Limpiar" @click="resetProyecto"/>
                         </BaseButtons>
 
                         <FormCheckRadioGroup v-if="! props.proyecto?.id" v-model="seguir_creando" type="switch" 
                             :options="{ true: 'Seguir creando proyectos' }" />
+                    </div>
+                </template>
+            </CardBox>
+        </SectionMain>
+
+        <SectionMain v-if="props.proyecto?.id">
+            <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Usuarios del proyecto" main />
+            
+            <CardBox is-form @submit.prevent="submitInvitacion">
+
+                <FormValidationErrors :formulario="formEnviarInvitacion"/>
+
+                <NotificationBarInCard v-if="usePage().props.succesFormEnviarInvitacion" color="success">
+                    Invitacion enviada
+                </NotificationBarInCard>
+
+                <FormField label="Correo del usuario">
+                    <FormControl v-model="formEnviarInvitacion.correo" type="email" placeholder="Ej: janedoe@gmail.com" />
+                </FormField>
+
+                <template #footer>
+                    <div class="flex gap-4">
+                        <BaseButtons>
+                            <BaseButton type="submit" color="info" label="Enviar invitacion"/>
+                            <BaseButton type="button" color="info" outline label="Limpiar" @click="resetInvitacion"/>
+                        </BaseButtons>
                     </div>
                 </template>
             </CardBox>

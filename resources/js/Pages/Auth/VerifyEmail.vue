@@ -35,7 +35,7 @@ const submit = () => {
 
     <SectionFullScreen v-slot="{ cardClass }">
       <CardBox :class="cardClass" is-form @submit.prevent="submit">
-        <FormValidationErrors />
+        <FormValidationErrors :formulario="form"/>
 
         <NotificationBarInCard v-if="verificationLinkSent" color="info">
           Se ha enviado un nuevo enlace de verificación a la dirección de correo electrónico que proporcionó durante el registro.

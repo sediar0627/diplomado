@@ -105,7 +105,7 @@ const reset = () => {
             
             <CardBox is-form @submit.prevent="submit">
 
-                <FormValidationErrors />
+                <FormValidationErrors :formulario="form"/>
 
                 <FormControl v-if="props.incidencia?.id" v-model="props.incidencia.id" type="hidden" />
 

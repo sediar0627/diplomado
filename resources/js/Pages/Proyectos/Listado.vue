@@ -17,6 +17,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  usuario_logueado_id: {
+    type: String,
+    required: true,
+  }
 });
 </script>
 
@@ -36,7 +40,7 @@ const props = defineProps({
       </SectionTitleLineWithButton>
 
       <CardBox class="mb-6" has-table v-if="props.proyectos.length > 0">
-        <TablaProyectos :proyectos="props.proyectos" />
+        <TablaProyectos :proyectos="props.proyectos" :usuario_logueado_id="props.usuario_logueado_id" />
       </CardBox>
 
       <CardBox v-if="props.proyectos.length == 0">

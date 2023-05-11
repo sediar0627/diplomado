@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -48,4 +50,21 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function proyectosPropios(): HasMany
+    {
+        return $this->hasMany(Proyecto::class, 'creador_id');
+    }
+
+    public function proyectosInvitados(): BelongsToMany
+    {
+        return $this->belongsToMany(Proyecto::class, 'proyecto_usuarios')
+            ->using(ProyectoUsuario::class)
+            ->withTimestamps();
+    }
+
+    public function proyectos()
+    {
+        return $this->proyectosPropios->merge($this->proyectosInvitados);
+    }
 }

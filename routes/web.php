@@ -4,7 +4,6 @@ use App\Http\Controllers\IncidenciaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\TableroController;
-use App\Models\Proyecto;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,6 +28,8 @@ Route::middleware(['auth', 'verified'])->group(function(){
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
+    Route::get('proyectos/{token}/aceptar_invitacion', [ProyectoController::class, 'aceptarInvitacion'])->name('proyectos.aceptar_invitacion');
+    Route::post('proyectos/{proyecto}/enviar_invitacion', [ProyectoController::class, 'enviarInvitacion'])->name('proyectos.enviar_invitacion');
     Route::resource('proyectos', ProyectoController::class)->parameters([
         'proyectos' => 'proyecto'
     ]);

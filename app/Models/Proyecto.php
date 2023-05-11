@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Proyecto extends Model
@@ -44,6 +45,12 @@ class Proyecto extends Model
         return $this->hasMany(Incidencia::class, 'proyecto_id');
     }
 
+    public function usuariosInvitados(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'proyecto_usuarios')
+            ->using(ProyectoUsuario::class);
+    }
+
     public function obtenerNuevoConsecutivoIncidencia()
     {
         $this->incidencias_creadas++;
@@ -52,7 +59,7 @@ class Proyecto extends Model
         return $this->incidencias_creadas;
     }
 
-    public function puedeEliminar(): bool
+    public function sePuedeEliminar(): bool
     {
         return $this->creador_id == auth()->id();
     }

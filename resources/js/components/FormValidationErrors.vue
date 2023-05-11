@@ -3,14 +3,21 @@ import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import NotificationBarInCard from "@/components/NotificationBarInCard.vue";
 
-const errors = computed(() => usePage().props.errors);
+const props = defineProps({
+  formulario: {
+    type: Object,
+    required: true
+  }
+});
 
-const hasErrors = computed(() => Object.keys(errors.value).length > 0);
+const errors = computed(() => props.formulario.errors);
+
+const tieneErrores = computed(() => props.formulario.hasErrors)
 </script>
 
 <template>
-  <NotificationBarInCard v-if="hasErrors" color="danger">
+  <NotificationBarInCard v-if="tieneErrores" color="danger">
     <b>¡Vaya! Algo salió mal.</b>
-    <span v-for="(error, key) in errors" :key="key">{{ error }}</span>
+    <span v-for="error in errors">{{ error }}</span>
   </NotificationBarInCard>
 </template>

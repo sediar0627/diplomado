@@ -6,11 +6,16 @@ import BaseLevel from "@/components/BaseLevel.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import axios from "axios";
-import CrearEditar from "./../../Pages/Proyectos/CrearEditar.vue";
 
 const props = defineProps({
-  checkable: Boolean,
-  proyectos: Array,
+  proyectos: {
+    type: Array,
+    required: true,
+  },
+  usuario_logueado_id: {
+    type: String,
+    required: true,
+  }
 });
 
 const proyectos = computed(() => props.proyectos);
@@ -99,8 +104,8 @@ const modalEliminado = proyecto => {
         </td>
         <td class="before:hidden lg:w-1 whitespace-nowrap">
           <BaseButtons type="justify-start lg:justify-end" no-wrap>
-            <BaseButton color="info" :icon="mdiPencilBox" small :href="route('proyectos.edit', proyecto.id)" />
-            <BaseButton color="danger" :icon="mdiTrashCan" small
+            <BaseButton v-if="proyecto.creador_id == props.usuario_logueado_id" color="info" :icon="mdiPencilBox" small :href="route('proyectos.edit', proyecto.id)" />
+            <BaseButton v-if="proyecto.creador_id == props.usuario_logueado_id" color="danger" :icon="mdiTrashCan" small
               @click="modalEliminado(proyecto); modalEliminadoActivo = true;" />
           </BaseButtons>
         </td>
