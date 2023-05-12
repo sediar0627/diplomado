@@ -1,7 +1,7 @@
 <script setup>
 import { mdiForwardburger, mdiBackburger, mdiMenu } from "@mdi/js";
 import { ref } from "vue";
-import { router } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import menuAside from "@/menuAside.js";
 import menuNavBar from "@/menuNavBar.js";
 import { useMainStore } from "@/stores/main.js";
@@ -41,6 +41,25 @@ const menuClick = (event, item) => {
     router.post(route("logout"));
   }
 };
+
+// Llenamos el resto del menu con las opciones de proyectos
+let dashboardsOption = menuAside[2];
+dashboardsOption.menu = [];
+
+let tableroOption = menuAside[3];
+tableroOption.menu = [];
+
+for (const proyecto of usePage().props.auth.proyectos) {
+  dashboardsOption.menu.push({
+    href: route("proyectos.dashboard", proyecto.id),
+    label: proyecto.codigo,
+  });
+
+  tableroOption.menu.push({
+    href: route("proyectos.tablero", proyecto.id),
+    label: proyecto.codigo,
+  });
+}
 </script>
 
 <template>

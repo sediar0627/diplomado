@@ -1,10 +1,9 @@
 <?php
 
+use App\Http\Controllers\EpicaController;
 use App\Http\Controllers\IncidenciaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProyectoController;
-use App\Http\Controllers\TableroController;
-use App\Models\Proyecto;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,27 +24,29 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function(){
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
 
+    Route::get('proyectos/{token}/aceptar_invitacion', [ProyectoController::class, 'aceptarInvitacion'])->name('proyectos.aceptar_invitacion');
+    Route::post('proyectos/{proyecto}/enviar_invitacion', [ProyectoController::class, 'enviarInvitacion'])->name('proyectos.enviar_invitacion');
+    Route::delete('proyectos/{proyecto}/eliminar_invitacion/{usuario}', [ProyectoController::class, 'eliminarInvitacion'])->name('proyectos.eliminar_invitacion');
     Route::resource('proyectos', ProyectoController::class)->parameters([
         'proyectos' => 'proyecto'
     ]);
 
-    Route::prefix('/proyecto/{proyecto}')->group(function(){
+    Route::prefix('/proyectos/{proyecto}')->group(function(){
+        
+        Route::get('/dashboard', [ProyectoController::class, 'dashboard'])->name('proyectos.dashboard');
+        Route::get('/tablero', [ProyectoController::class, 'tablero'])->name('proyectos.tablero');
+
+        Route::resource('epicas', EpicaController::class)->parameters([
+            'proyectos' => 'proyecto',
+            'epicas' => 'epica'
+        ]);
+
         Route::resource('incidencias', IncidenciaController::class)->parameters([
             'proyectos' => 'proyecto',
             'incidencias' => 'incidencia'
         ]);
     });
-
-    // Route::resource('incidencias', IncidenciaController::class)->parameters([
-    //     'proyectos' => 'proyecto',
-    //     'incidencias' => 'incidencia'
-    // ])->shallow();
-
-    Route::get('/tableros', [TableroController::class, 'index'])->name('tableros');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

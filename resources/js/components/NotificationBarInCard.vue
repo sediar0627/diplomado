@@ -6,6 +6,10 @@ defineProps({
     type: String,
     required: true,
   },
+  text: {
+    type: String,
+    default: null,
+  },
 });
 </script>
 
@@ -15,7 +19,10 @@ defineProps({
       :class="[colorsBgLight[color]]"
       class="rounded-t-2xl flex flex-col p-6 transition-colors"
     >
-      <slot />
+    <div v-if="text">
+      {{ text }}
+    </div>
+    <slot />
     </div>
   </div>
 </template>

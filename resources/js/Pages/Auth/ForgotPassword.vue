@@ -41,7 +41,7 @@ const submit = () => {
         is-form
         @submit.prevent="submit"
       >
-        <FormValidationErrors />
+        <FormValidationErrors :formulario="form"/>
 
         <NotificationBarInCard 
           v-if="status"

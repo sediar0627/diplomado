@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\EstadoIncidencia;
+use App\Interface\ContratoModelo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Incidencia extends Model
+class Incidencia extends Model implements ContratoModelo
 {
     use HasFactory;
 
@@ -23,6 +25,11 @@ class Incidencia extends Model
         'estado',
         'responsable_id',
         'informador_id',
+    ];
+
+    protected $casts = [
+        'puntaje' => 'integer',
+        'estado' => EstadoIncidencia::class,
     ];
 
     protected $appends = [

@@ -12,6 +12,8 @@ import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.
 import NotificationBarInCard from "@/components/NotificationBarInCard.vue";
 import { useForm, Head, usePage } from '@inertiajs/vue3'
 import FormValidationErrors from "@/components/FormValidationErrors.vue";
+import EpicaProyecto from "@/components/Proyecto/EpicaProyecto.vue";
+import InvitacionProyecto from "@/components/Proyecto/InvitacionProyecto.vue";
 
 const props = defineProps({
     proyecto: {
@@ -23,6 +25,14 @@ const props = defineProps({
             descripcion: '',
         },
     },
+    epicas: {
+        type: Array,
+        default: [],
+    },
+    usuariosInvitados: {
+        type: Array,
+        default: [],
+    }
 });
 
 const form = useForm({
@@ -61,7 +71,7 @@ const editarProyecto = () => {
     });
 }
 
-const submit = () => {
+const submitProyecto = () => {
     if(! props.proyecto?.id){
         crearProyecto();
     }else{
@@ -69,10 +79,11 @@ const submit = () => {
     }
 };
 
-const reset = () => {
+const resetProyecto = () => {
     if(! props.proyecto?.id){
         form.reset();
     }
+    form.clearErrors();
     usePage().props.succesForm = false;
 };
 </script>
@@ -93,9 +104,9 @@ const reset = () => {
                 />
             </SectionTitleLineWithButton>
             
-            <CardBox is-form @submit.prevent="submit">
+            <CardBox is-form @submit.prevent="submitProyecto">
 
-                <FormValidationErrors />
+                <FormValidationErrors :formulario="form"/>
 
                 <FormControl v-if="props.proyecto" v-model="props.proyecto.id" type="hidden" />
 
@@ -119,7 +130,7 @@ const reset = () => {
                     <div class="flex gap-4">
                         <BaseButtons>
                             <BaseButton type="submit" color="info" :label="! props.proyecto?.id ? 'Crear' : 'Actualizar'"/>
-                            <BaseButton type="button" color="info" outline label="Limpiar" @click="reset"/>
+                            <BaseButton type="button" color="info" outline label="Limpiar" @click="resetProyecto"/>
                         </BaseButtons>
 
                         <FormCheckRadioGroup v-if="! props.proyecto?.id" v-model="seguir_creando" type="switch" 
@@ -127,6 +138,14 @@ const reset = () => {
                     </div>
                 </template>
             </CardBox>
+        </SectionMain>
+
+        <SectionMain v-if="props.proyecto?.id">
+            <EpicaProyecto :proyecto="props.proyecto" :epicas="props.epicas" />
+        </SectionMain>
+
+        <SectionMain v-if="props.proyecto?.id">
+            <InvitacionProyecto :proyecto="props.proyecto" :usuariosInvitados="props.usuariosInvitados" />
         </SectionMain>
     </LayoutAuthenticated>
 </template>

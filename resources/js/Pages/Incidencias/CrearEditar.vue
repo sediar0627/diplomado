@@ -12,6 +12,7 @@ import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.
 import NotificationBarInCard from "@/components/NotificationBarInCard.vue";
 import { useForm, Head, usePage } from '@inertiajs/vue3'
 import FormValidationErrors from "@/components/FormValidationErrors.vue";
+import { computed } from "vue";
 
 const props = defineProps({
     proyecto: {
@@ -30,7 +31,32 @@ const props = defineProps({
             responsable_id: '',
         },
     },
+    epicas: {
+        type: Array,
+        default: [],
+    },
+    usuariosInvitados: {
+        type: Array,
+        default: [],
+    },
 });
+
+const epicas = [
+    { value: null, label: 'Sin asignar' },
+].concat(
+    props.epicas.map(epica => (
+        { value: epica.id, label: epica.nombre }
+    ))
+);
+
+const usuariosInvitados = [
+    { value: null, label: 'Sin asignar' },
+    { value: usePage().props.auth.user.id, label: usePage().props.auth.user.name + ' - TU' }
+].concat(
+    props.usuariosInvitados.map(usuario => (
+        { value: usuario.id, label: usuario.name }
+    ))
+);
 
 const form = useForm({
     id: props.incidencia.id,
@@ -105,16 +131,24 @@ const reset = () => {
             
             <CardBox is-form @submit.prevent="submit">
 
-                <FormValidationErrors />
+                <FormValidationErrors :formulario="form"/>
 
                 <FormControl v-if="props.incidencia?.id" v-model="props.incidencia.id" type="hidden" />
 
                 <NotificationBarInCard v-if="usePage().props.succesForm" color="success">
-                    {{ ! props.incidencia?.id ? 'Incidencia creado correctamente' : 'Incidencia actualizado correctamente' }}
+                    {{ ! props.incidencia?.id ? 'Incidencia creada correctamente' : 'Incidencia actualizada correctamente' }}
                 </NotificationBarInCard>
 
                 <FormField label="Titulo de la incidencia">
                     <FormControl v-model="form.titulo" type="text" placeholder="Ej: Creacion del login" />
+                </FormField>
+
+                <FormField label="Epica">
+                    <FormControl v-model="form.epica_id" :options="epicas" />
+                </FormField>
+
+                <FormField label="Responsable">
+                    <FormControl v-model="form.responsable_id" :options="usuariosInvitados" />
                 </FormField>
 
                 <FormField label="Descripcion del incidencia">

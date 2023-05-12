@@ -3,6 +3,14 @@ export const chartColors = {
     primary: "#00D1B2",
     info: "#209CEE",
     danger: "#FF3860",
+
+    // Dashboard Colors
+    dashboardPendientes: '#6B7280',
+    dashboardEnCurso: '#3B82F6',
+		dashboardAjustes: '#FB9206',
+		dashboardTest: '#8B5CF6',
+		dashboardQa: '#0EA5E9',
+		dashboardFinalizada: '#10B981',
   },
 };
 
@@ -36,19 +44,25 @@ const datasetObject = (color, points) => {
   };
 };
 
-export const sampleChartData = (points = 9) => {
-  const labels = [];
-
-  for (let i = 1; i <= points; i++) {
-    labels.push(`0${i}`);
-  }
+export const rendimientoTareas = (points = 6) => {
+  const labels = [
+    'Lunes',
+    'Martes',
+    'Miercoles',
+    'Jueves',
+    'Viernes',
+    'Sabado',
+  ];
 
   return {
     labels,
     datasets: [
-      datasetObject("primary", points),
-      datasetObject("info", points),
-      datasetObject("danger", points),
+      datasetObject("dashboardPendientes", points),
+      datasetObject("dashboardEnCurso", points),
+      datasetObject("dashboardAjustes", points),
+      datasetObject("dashboardTest", points),
+      datasetObject("dashboardQa", points),
+      datasetObject("dashboardFinalizada", points),
     ],
   };
 };

@@ -33,8 +33,12 @@ class IncidenciaController extends Controller
     {
         $this->verificarProyecto($proyecto);
 
+        $proyecto->load(['epicas', 'usuariosInvitados']);
+
         return Inertia::render('Incidencias/CrearEditar', [
-            'proyecto' => $proyecto
+            'proyecto' => $proyecto,
+            'epicas' => $proyecto->epicas,
+            'usuariosInvitados' => $proyecto->usuariosInvitados,
         ]);
     }
 
@@ -57,7 +61,7 @@ class IncidenciaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Incidencia $incidencia, Proyecto $proyecto)
+    public function show(Proyecto $proyecto, Incidencia $incidencia)
     {
         $this->verificarProyecto($proyecto);
     }
@@ -65,23 +69,35 @@ class IncidenciaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Incidencia $incidencia, Proyecto $proyecto)
+    public function edit(Proyecto $proyecto, Incidencia $incidencia)
     {
         $this->verificarProyecto($proyecto);
+
+        $proyecto->load(['epicas', 'usuariosInvitados']);
+
+        return Inertia::render('Incidencias/CrearEditar', [
+            'proyecto' => $proyecto,
+            'epicas' => $proyecto->epicas,
+            'usuariosInvitados' => $proyecto->usuariosInvitados,
+            'incidencia' => $incidencia,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(IncidenciaRequest $request, Incidencia $incidencia, Proyecto $proyecto)
+    public function update(IncidenciaRequest $request, Proyecto $proyecto, Incidencia $incidencia)
     {
         $this->verificarProyecto($proyecto);
+
+        $data = $request->validated();
+        $incidencia->update($data);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Incidencia $incidencia, Proyecto $proyecto)
+    public function destroy(Proyecto $proyecto, Incidencia $incidencia)
     {
         $this->verificarProyecto($proyecto);
     }

@@ -1,17 +1,10 @@
 import {
   mdiAccountCircle,
   mdiMonitor,
-  mdiSquareEditOutline,
-  mdiTable,
   mdiViewList,
 } from "@mdi/js";
 
 export default [
-  {
-    route: "dashboard",
-    icon: mdiMonitor,
-    label: "Dashboard",
-  },
   {
     to: "/profile",
     label: "Mi perfil",
@@ -32,34 +25,13 @@ export default [
     ],
   },
   {
-    label: "Sprints",
-    icon: mdiViewList,
-    menu: [
-      {
-        label: "Listado de sprints",
-      },
-      {
-        label: "Nuevo sprint",
-      },
-    ],
+    label: "Dashboard",
+    icon: mdiMonitor,
+    menu: [],
   },
   {
     label: "Tableros",
     icon: mdiViewList,
-    menu: [
-      {
-        label: "ScrumPro",
-        href: "/tableros?tablero=ScrumPro",
-      },
-      {
-        label: "Alcon",
-        href: "/tableros?tablero=Alcon",
-      },
-    ],
+    menu: [],
   },
-  {
-    to: "/forms",
-    label: "Informes",
-    icon: mdiSquareEditOutline,
-  }
 ];

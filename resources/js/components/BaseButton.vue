@@ -106,6 +106,13 @@ const componentClass = computed(() => {
 
   return base;
 });
+
+const emit = defineEmits(["iconClick"]);
+
+const iconClick = (event) => {
+  emit("iconClick", event);
+};
+
 </script>
 
 <template>
@@ -117,7 +124,7 @@ const componentClass = computed(() => {
     :target="target"
     :disabled="disabled"
   >
-    <BaseIcon v-if="icon" :path="icon" :size="iconSize" />
+    <BaseIcon v-if="icon" :path="icon" :size="iconSize" @icon-click="iconClick"/>
     <span v-if="label" :class="labelClass">{{ label }}</span>
   </component>
 </template>
