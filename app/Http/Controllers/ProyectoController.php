@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\EstadoIncidencia;
 use App\Http\Requests\EnviarInvitacionProyectoRequest;
 use App\Http\Requests\ProyectoRequest;
 use App\Mail\InvitacionProyecto;
@@ -18,10 +19,7 @@ class ProyectoController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Proyectos/Listado', [
-            'proyectos' => auth()->user()->proyectos(),
-            'usuario_logueado_id' => auth()->id()
-        ]);
+        return Inertia::render('Proyectos/Listado');
     }
 
     /**
@@ -127,5 +125,21 @@ class ProyectoController extends Controller
         ]);
 
         return to_route('proyectos.index')->with('success', "Bienvenido al equipo de {$proyecto->nombre}.");
+    }
+
+    public function dashboard(Proyecto $proyecto)
+    {
+        return Inertia::render('Proyectos/Dashboard', [
+            'proyecto' => $proyecto,
+            'cantidadIncidenciasPorEstado' => $proyecto->cantidadIncidenciasPorEstado()
+        ]);
+    }
+
+    public function tablero(Proyecto $proyecto)
+    {
+        return Inertia::render('Proyectos/Dashboard', [
+            'proyecto' => $proyecto,
+            'cantidadIncidenciasPorEstado' => $proyecto->cantidadIncidenciasPorEstado()
+        ]);
     }
 }

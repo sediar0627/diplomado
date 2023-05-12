@@ -1,24 +1,14 @@
 <script setup>
 import { computed, ref } from "vue";
-import { mdiTrashCan, mdiPencilBox } from "@mdi/js";
+import { mdiTrashCan, mdiPencilBox, mdiEye } from "@mdi/js";
 import CardBoxModal from "@/components/CardBoxModal.vue";
 import BaseLevel from "@/components/BaseLevel.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import axios from "axios";
+import { usePage } from "@inertiajs/vue3";
 
-const props = defineProps({
-  proyectos: {
-    type: Array,
-    required: true,
-  },
-  usuario_logueado_id: {
-    type: String,
-    required: true,
-  }
-});
-
-const proyectos = computed(() => props.proyectos);
+const proyectos = computed(() => usePage().props.auth.proyectos);
 
 const porPagina = ref(5);
 
@@ -104,8 +94,9 @@ const modalEliminado = proyecto => {
         </td>
         <td class="before:hidden lg:w-1 whitespace-nowrap">
           <BaseButtons type="justify-start lg:justify-end" no-wrap>
-            <BaseButton v-if="proyecto.creador_id == props.usuario_logueado_id" color="info" :icon="mdiPencilBox" small :href="route('proyectos.edit', proyecto.id)" />
-            <BaseButton v-if="proyecto.creador_id == props.usuario_logueado_id" color="danger" :icon="mdiTrashCan" small
+            <BaseButton color="warning" :icon="mdiEye" small :href="route('proyectos.dashboard', proyecto.id)" />
+            <BaseButton v-if="proyecto.creador_id == usePage().props.auth.user.id" color="info" :icon="mdiPencilBox" small :href="route('proyectos.edit', proyecto.id)" />
+            <BaseButton v-if="proyecto.creador_id == usePage().props.auth.user.id" color="danger" :icon="mdiTrashCan" small
               @click="modalEliminado(proyecto); modalEliminadoActivo = true;" />
           </BaseButtons>
         </td>

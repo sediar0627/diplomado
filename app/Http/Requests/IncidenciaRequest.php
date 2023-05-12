@@ -24,7 +24,7 @@ class IncidenciaRequest extends FormRequest
         return [
             'sprint_id' => ['nullable', 'exists:sprints,id'],
             'titulo' => ['required', 'string', 'max:100'],
-            'descripcion' => ['nullable', 'text'],
+            'descripcion' => ['nullable', 'string'],
             'epica_id' => ['nullable', 'exists:epicas,id'],
             'puntaje' => ['nullable', 'integer', 'min:1', 'max:32'],
             'responsable_id' => ['nullable', 'exists:users,id'],

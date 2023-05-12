@@ -51,6 +51,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    protected $with = [
+        'proyectosPropios',
+        'proyectosInvitados',
+    ];
+
     public function proyectosPropios(): HasMany
     {
         return $this->hasMany(Proyecto::class, 'creador_id');

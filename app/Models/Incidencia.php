@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\EstadoIncidencia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,6 +24,11 @@ class Incidencia extends Model
         'estado',
         'responsable_id',
         'informador_id',
+    ];
+
+    protected $casts = [
+        'puntaje' => 'integer',
+        'estado' => EstadoIncidencia::class,
     ];
 
     protected $appends = [
