@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Enums\EstadoIncidencia;
+use ContratoModelo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Proyecto extends Model
+class Proyecto extends Model implements ContratoModelo
 {
     use HasFactory;
 
@@ -39,6 +40,11 @@ class Proyecto extends Model
     public function creador(): BelongsTo
     {
         return $this->belongsTo(User::class, 'creador_id');
+    }
+
+    public function epicas(): HasMany
+    {
+        return $this->hasMany(Epica::class, 'proyecto_id');
     }
 
     public function incidencias(EstadoIncidencia $estado = null): HasMany

@@ -25,7 +25,7 @@ export default [
     ],
   },
   {
-    label: "Dashboards",
+    label: "Dashboard",
     icon: mdiMonitor,
     menu: [],
   },

@@ -25,10 +25,16 @@ const spanClass = computed(
 );
 
 const iconSize = computed(() => props.size ?? 16);
+
+const emit = defineEmits(["iconClick"]);
+
+const iconClick = (event) => {
+  emit("iconClick", event);
+};
 </script>
 
 <template>
-  <span :class="spanClass">
+  <span :class="spanClass" @click="iconClick">
     <svg
       viewBox="0 0 24 24"
       :width="iconSize"

@@ -1,5 +1,5 @@
 <script setup>
-import { mdiBallotOutline, mdiTableBorder } from "@mdi/js";
+import { mdiBallotOutline, mdiTableBorder, mdiClose } from "@mdi/js";
 import SectionMain from "@/components/SectionMain.vue";
 import CardBox from "@/components/CardBox.vue";
 import FormCheckRadioGroup from "@/components/FormCheckRadioGroup.vue";
@@ -12,6 +12,7 @@ import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.
 import NotificationBarInCard from "@/components/NotificationBarInCard.vue";
 import { useForm, Head, usePage } from '@inertiajs/vue3'
 import FormValidationErrors from "@/components/FormValidationErrors.vue";
+import axios from "axios";
 
 const props = defineProps({
     proyecto: {
@@ -23,6 +24,14 @@ const props = defineProps({
             descripcion: '',
         },
     },
+    epicas: {
+        type: Array,
+        default: [],
+    },
+    usuariosInvitados: {
+        type: Array,
+        default: [],
+    }
 });
 
 const form = useForm({
@@ -98,6 +107,20 @@ const resetInvitacion = () => {
     formEnviarInvitacion.clearErrors();
     usePage().props.succesFormEnviarInvitacion = false;
 }
+
+const eliminarInvitacion = idUsuarioInvitado => {
+    axios
+      .delete(route("proyectos.eliminar_invitacion", [props.proyecto?.id ?? '__id', idUsuarioInvitado]))
+      .then(() => {
+        usePage().props.succesEliminarInvitacion = true;
+        setTimeout(() => {
+            location.reload();
+        }, 2000);
+      })
+      .catch(() => {
+        alert("Error al eliminar el proyecto");
+      });
+};
 </script>
 
 <template>
@@ -162,6 +185,22 @@ const resetInvitacion = () => {
                 <NotificationBarInCard v-if="usePage().props.succesFormEnviarInvitacion" color="success">
                     Invitacion enviada
                 </NotificationBarInCard>
+
+                <NotificationBarInCard v-if="usePage().props.succesEliminarInvitacion" color="success">
+                    Usuario eliminado
+                </NotificationBarInCard>
+
+                <div class="mb-8">
+                    <BaseButton
+                        v-for="usuarioInvitado in props.usuariosInvitados"
+                        :icon="mdiClose"
+                        :label="usuarioInvitado.email"
+                        color="info"
+                        rounded-full
+                        small
+                        @icon-click="eliminarInvitacion(usuarioInvitado.id)"
+                    />
+                </div>
 
                 <FormField label="Correo del usuario">
                     <FormControl v-model="formEnviarInvitacion.correo" type="email" placeholder="Ej: janedoe@gmail.com" />

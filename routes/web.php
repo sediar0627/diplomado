@@ -26,6 +26,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
 
     Route::get('proyectos/{token}/aceptar_invitacion', [ProyectoController::class, 'aceptarInvitacion'])->name('proyectos.aceptar_invitacion');
     Route::post('proyectos/{proyecto}/enviar_invitacion', [ProyectoController::class, 'enviarInvitacion'])->name('proyectos.enviar_invitacion');
+    Route::delete('proyectos/{proyecto}/eliminar_invitacion/{usuario}', [ProyectoController::class, 'eliminarInvitacion'])->name('proyectos.eliminar_invitacion');
     Route::resource('proyectos', ProyectoController::class)->parameters([
         'proyectos' => 'proyecto'
     ]);

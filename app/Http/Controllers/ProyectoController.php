@@ -59,8 +59,12 @@ class ProyectoController extends Controller
             abort(403);
         }
 
+        $proyecto->load(['epicas', 'usuariosInvitados']);
+
         return Inertia::render('Proyectos/CrearEditar', [
-            'proyecto' => $proyecto
+            'proyecto' => $proyecto,
+            'epicas' => $proyecto->epicas,
+            'usuariosInvitados' => $proyecto->usuariosInvitados
         ]);
     }
 
@@ -125,6 +129,15 @@ class ProyectoController extends Controller
         ]);
 
         return to_route('proyectos.index')->with('success', "Bienvenido al equipo de {$proyecto->nombre}.");
+    }
+
+    public function eliminarInvitacion(Proyecto $proyecto, User $usuario)
+    {
+        if($proyecto->creador_id != auth()->id()){
+            abort(403);
+        }
+
+        $proyecto->usuariosInvitados()->detach($usuario->id);
     }
 
     public function dashboard(Proyecto $proyecto)
