@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Enums\EstadoIncidencia;
-use ContratoModelo;
+use App\Interface\ContratoModelo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

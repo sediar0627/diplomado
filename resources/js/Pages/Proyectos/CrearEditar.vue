@@ -190,7 +190,7 @@ const eliminarInvitacion = idUsuarioInvitado => {
                     Usuario eliminado
                 </NotificationBarInCard>
 
-                <div class="mb-8">
+                <div class="flex gap-4 mb-8">
                     <BaseButton
                         v-for="usuarioInvitado in props.usuariosInvitados"
                         :icon="mdiClose"
