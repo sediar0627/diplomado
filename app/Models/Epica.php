@@ -6,6 +6,7 @@ use App\Interface\ContratoModelo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Epica extends Model implements ContratoModelo
 {
@@ -30,5 +31,10 @@ class Epica extends Model implements ContratoModelo
     public function proyecto(): BelongsTo
     {
         return $this->belongsTo(Proyecto::class, 'proyecto_id');
+    }
+
+    public function incidencias(): HasMany
+    {
+        return $this->hasMany(Incidencia::class, 'epica_id');
     }
 }

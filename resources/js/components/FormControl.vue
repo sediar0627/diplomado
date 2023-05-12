@@ -136,10 +136,10 @@ if (props.ctrlKFocus) {
     >
       <option
         v-for="option in options"
-        :key="option.id ?? option"
-        :value="option"
+        :key="option.value"
+        :value="option.value"
       >
-        {{ option.label ?? option }}
+        {{ option.label }}
       </option>
     </select>
     <textarea

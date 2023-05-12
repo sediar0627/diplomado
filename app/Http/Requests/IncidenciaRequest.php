@@ -22,12 +22,20 @@ class IncidenciaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sprint_id' => ['nullable', 'exists:sprints,id'],
+            'sprint_id' => ['nullable', 'exists:sprints,id,proyecto_id,' . $this->route('proyecto')->id],
             'titulo' => ['required', 'string', 'max:100'],
             'descripcion' => ['nullable', 'string'],
-            'epica_id' => ['nullable', 'exists:epicas,id'],
+            'epica_id' => ['nullable', 'exists:epicas,id,proyecto_id,' . $this->route('proyecto')->id],
             'puntaje' => ['nullable', 'integer', 'min:1', 'max:32'],
-            'responsable_id' => ['nullable', 'exists:users,id'],
+            'responsable_id' => [
+                'nullable', 
+                'exists:usuarios,id',
+                function ($attribute, $value, $fail) {
+                    if (!$this->route('proyecto')->usuariosInvitados->pluck('id')->contains($value)) {
+                        $fail('El usuario no pertenece al proyecto');
+                    }
+                }
+            ],
         ];
     }
 }

@@ -1,5 +1,5 @@
 <script setup>
-import { mdiBallotOutline, mdiTableBorder, mdiClose } from "@mdi/js";
+import { mdiBallotOutline, mdiTableBorder } from "@mdi/js";
 import SectionMain from "@/components/SectionMain.vue";
 import CardBox from "@/components/CardBox.vue";
 import FormCheckRadioGroup from "@/components/FormCheckRadioGroup.vue";
@@ -12,7 +12,8 @@ import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.
 import NotificationBarInCard from "@/components/NotificationBarInCard.vue";
 import { useForm, Head, usePage } from '@inertiajs/vue3'
 import FormValidationErrors from "@/components/FormValidationErrors.vue";
-import axios from "axios";
+import EpicaProyecto from "@/components/Proyecto/EpicaProyecto.vue";
+import InvitacionProyecto from "@/components/Proyecto/InvitacionProyecto.vue";
 
 const props = defineProps({
     proyecto: {
@@ -85,42 +86,6 @@ const resetProyecto = () => {
     form.clearErrors();
     usePage().props.succesForm = false;
 };
-
-const formEnviarInvitacion = useForm({
-    correo: ''
-});
-
-const submitInvitacion = () => {
-    formEnviarInvitacion.post(route('proyectos.enviar_invitacion', props.proyecto?.id ?? '__id'), {
-        onSuccess: () => {
-            usePage().props.succesFormEnviarInvitacion = true;
-            formEnviarInvitacion.reset();
-        },
-        onError: () => {
-            usePage().props.succesFormEnviarInvitacion = false;
-        },
-    });
-}
-
-const resetInvitacion = () => {
-    formEnviarInvitacion.reset();
-    formEnviarInvitacion.clearErrors();
-    usePage().props.succesFormEnviarInvitacion = false;
-}
-
-const eliminarInvitacion = idUsuarioInvitado => {
-    axios
-      .delete(route("proyectos.eliminar_invitacion", [props.proyecto?.id ?? '__id', idUsuarioInvitado]))
-      .then(() => {
-        usePage().props.succesEliminarInvitacion = true;
-        setTimeout(() => {
-            location.reload();
-        }, 2000);
-      })
-      .catch(() => {
-        alert("Error al eliminar el proyecto");
-      });
-};
 </script>
 
 <template>
@@ -176,45 +141,11 @@ const eliminarInvitacion = idUsuarioInvitado => {
         </SectionMain>
 
         <SectionMain v-if="props.proyecto?.id">
-            <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Usuarios del proyecto" main />
-            
-            <CardBox is-form @submit.prevent="submitInvitacion">
+            <EpicaProyecto :proyecto="props.proyecto" :epicas="props.epicas" />
+        </SectionMain>
 
-                <FormValidationErrors :formulario="formEnviarInvitacion"/>
-
-                <NotificationBarInCard v-if="usePage().props.succesFormEnviarInvitacion" color="success">
-                    Invitacion enviada
-                </NotificationBarInCard>
-
-                <NotificationBarInCard v-if="usePage().props.succesEliminarInvitacion" color="success">
-                    Usuario eliminado
-                </NotificationBarInCard>
-
-                <div class="flex gap-4 mb-8">
-                    <BaseButton
-                        v-for="usuarioInvitado in props.usuariosInvitados"
-                        :icon="mdiClose"
-                        :label="usuarioInvitado.email"
-                        color="info"
-                        rounded-full
-                        small
-                        @icon-click="eliminarInvitacion(usuarioInvitado.id)"
-                    />
-                </div>
-
-                <FormField label="Correo del usuario">
-                    <FormControl v-model="formEnviarInvitacion.correo" type="email" placeholder="Ej: janedoe@gmail.com" />
-                </FormField>
-
-                <template #footer>
-                    <div class="flex gap-4">
-                        <BaseButtons>
-                            <BaseButton type="submit" color="info" label="Enviar invitacion"/>
-                            <BaseButton type="button" color="info" outline label="Limpiar" @click="resetInvitacion"/>
-                        </BaseButtons>
-                    </div>
-                </template>
-            </CardBox>
+        <SectionMain v-if="props.proyecto?.id">
+            <InvitacionProyecto :proyecto="props.proyecto" :usuariosInvitados="props.usuariosInvitados" />
         </SectionMain>
     </LayoutAuthenticated>
 </template>

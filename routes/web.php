@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EpicaController;
 use App\Http\Controllers\IncidenciaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProyectoController;
@@ -35,6 +36,11 @@ Route::middleware(['auth', 'verified'])->group(function(){
         
         Route::get('/dashboard', [ProyectoController::class, 'dashboard'])->name('proyectos.dashboard');
         Route::get('/tablero', [ProyectoController::class, 'tablero'])->name('proyectos.tablero');
+
+        Route::resource('epicas', EpicaController::class)->parameters([
+            'proyectos' => 'proyecto',
+            'epicas' => 'epica'
+        ]);
 
         Route::resource('incidencias', IncidenciaController::class)->parameters([
             'proyectos' => 'proyecto',
